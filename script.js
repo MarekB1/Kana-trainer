@@ -25,6 +25,46 @@ const katakanaGroups = [
     { id: 'k-row-w', label: 'wa, wo, n (ワ-ン)', chars: [{h:'ワ',r:'wa'}, {h:'ヲ',r:'wo'}, {h:'ン',r:'n'}] }
 ];
 
+const vocabGroups = [
+    { id: 'v-l1-1', label: 'L1 - Zámená a ľudia', chars: [
+        {h:'わたし', r:'watashi', s:'ja'}, {h:'わたしたち', r:'watashitachi', s:'my'},
+        {h:'あなた', r:'anata', s:'ty'}, {h:'あのひと', r:'anohito', s:'ten človek'},
+        {h:'みなさん', r:'minasan', s:'všetci / dámy a páni'}
+    ]},
+    { id: 'v-l1-2', label: 'L1 - Povolania', chars: [
+        {h:'せんせい', r:'sensei', s:'učiteľ (nie o sebe)'}, {h:'きょうし', r:'kyoushi', s:'učiteľ (o sebe)'},
+        {h:'がくせい', r:'gakusei', s:'študent'}, {h:'かいしゃいん', r:'kaishain', s:'zamestnanec firmy'},
+        {h:'ぎんこういん', r:'ginkouin', s:'bankový úradník'}, {h:'いしゃ', r:'isha', s:'lekár'},
+        {h:'けんきゅうしゃ', r:'kenkyuusha', s:'výskumník'}, {h:'エンジニア', r:'enjinia', s:'inžinier'}
+    ]},
+    { id: 'v-l1-3', label: 'L1 - Miesta a otázky', chars: [
+        {h:'だいがく', r:'daigaku', s:'univerzita'}, {h:'びょういん', r:'byouin', s:'nemocnica'},
+        {h:'でんき', r:'denki', s:'elektrina / svetlo'}, {h:'だれ', r:'dare', s:'kto'}
+    ]},
+    { id: 'v-l2-1', label: 'L2 - Ukazovacie zámená', chars: [
+        {h:'これ', r:'kore', s:'toto (tu)'}, {h:'それ', r:'sore', s:'tamto (pri tebe)'},
+        {h:'あれ', r:'are', s:'tamto (ďaleko)'}, {h:'この', r:'kono', s:'tento (tu)'},
+        {h:'その', r:'sono', s:'tamten (pri tebe)'}, {h:'あの', r:'ano', s:'tamten (ďaleko)'}
+    ]},
+    { id: 'v-l2-2', label: 'L2 - Knihy a papier', chars: [
+        {h:'ほん', r:'hon', s:'kniha'}, {h:'じしょ', r:'jisho', s:'slovník'},
+        {h:'ざっし', r:'zasshi', s:'časopis'}, {h:'しんぶん', r:'shinbun', s:'noviny'},
+        {h:'ノート', r:'nooto', s:'zošit'}, {h:'てちょう', r:'techou', s:'vreckový diár'},
+        {h:'めいし', r:'meishi', s:'vizitka'}, {h:'カード', r:'kaado', s:'karta'}
+    ]},
+    { id: 'v-l2-3', label: 'L2 - Predmety a nábytok', chars: [
+        {h:'えんぴつ', r:'enpitsu', s:'ceruzka'}, {h:'ボールペン', r:'boorupen', s:'pero'},
+        {h:'かぎ', r:'kagi', s:'kľúč'}, {h:'とけい', r:'tokei', s:'hodinky / hodiny'},
+        {h:'かさ', r:'kasa', s:'dáždnik'}, {h:'かばん', r:'kaban', s:'taška / kufrík'},
+        {h:'つくえ', r:'tsukue', s:'stôl'}, {h:'いす', r:'isu', s:'stolička'}
+    ]},
+    { id: 'v-l2-4', label: 'L2 - Ostatné', chars: [
+        {h:'チョコレート', r:'chokoreeto', s:'čokoláda'}, {h:'コーヒー', r:'koohii', s:'káva'},
+        {h:'えいご', r:'eigo', s:'angličtina'}, {h:'にほんご', r:'nihongo', s:'japončina'},
+        {h:'なん', r:'nan', s:'čo'}
+    ]}
+];
+
 // --- APP STATE ---
 let currentAlphabet = 'hiragana';
 let currentMode = 'h-r';
@@ -52,19 +92,42 @@ function setAlphabet(alpha) {
     
     const btnHiragana = document.getElementById('alpha-hiragana');
     const btnKatakana = document.getElementById('alpha-katakana');
+    const btnVocab = document.getElementById('alpha-vocab');
+    
+    const mode1Btn = document.getElementById('mode-h-r');
+    const mode2Btn = document.getElementById('mode-r-h');
+    
+    const inactiveClass = "flex-1 px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:text-gray-700 transition-all";
+    const activeClass = "flex-1 px-4 py-2 rounded-lg text-sm font-bold bg-white text-blue-600 shadow-sm transition-all";
+
+    btnHiragana.className = inactiveClass;
+    btnKatakana.className = inactiveClass;
+    btnVocab.className = inactiveClass;
     
     if (alpha === 'hiragana') {
-        btnHiragana.className = "flex-1 px-4 py-2 rounded-lg text-sm font-bold bg-white text-blue-600 shadow-sm transition-all";
-        btnKatakana.className = "flex-1 px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:text-gray-700 transition-all";
+        btnHiragana.className = activeClass;
         document.getElementById('main-title').innerText = "Hiragana Trainer";
         document.getElementById('chart-hiragana-content').classList.remove('hidden');
         document.getElementById('chart-katakana-content').classList.add('hidden');
-    } else {
-        btnKatakana.className = "flex-1 px-4 py-2 rounded-lg text-sm font-bold bg-white text-blue-600 shadow-sm transition-all";
-        btnHiragana.className = "flex-1 px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:text-gray-700 transition-all";
+        document.getElementById('btn-chart').classList.remove('hidden');
+        mode1Btn.innerText = "Znak → Romaji";
+        mode2Btn.innerText = "Romaji → Znak";
+    } else if (alpha === 'katakana') {
+        btnKatakana.className = activeClass;
         document.getElementById('main-title').innerText = "Katakana Trainer";
         document.getElementById('chart-katakana-content').classList.remove('hidden');
         document.getElementById('chart-hiragana-content').classList.add('hidden');
+        document.getElementById('btn-chart').classList.remove('hidden');
+        mode1Btn.innerText = "Znak → Romaji";
+        mode2Btn.innerText = "Romaji → Znak";
+    } else if (alpha === 'vocab') {
+        btnVocab.className = activeClass;
+        document.getElementById('main-title').innerText = "Slovíčka L1-2";
+        document.getElementById('chart-katakana-content').classList.add('hidden');
+        document.getElementById('chart-hiragana-content').classList.add('hidden');
+        document.getElementById('btn-chart').classList.add('hidden'); 
+        mode1Btn.innerText = "Jap → Slov";
+        mode2Btn.innerText = "Slov → Romaji";
     }
 
     initMenu();
@@ -75,14 +138,15 @@ function initMenu() {
     const container = document.getElementById('checkbox-container');
     container.innerHTML = '';
     
-    const groupsToUse = currentAlphabet === 'hiragana' ? hiraganaGroups : katakanaGroups;
+    let groupsToUse;
+    if (currentAlphabet === 'hiragana') groupsToUse = hiraganaGroups;
+    else if (currentAlphabet === 'katakana') groupsToUse = katakanaGroups;
+    else groupsToUse = vocabGroups;
 
     groupsToUse.forEach((group, index) => {
         const label = document.createElement('label');
         label.className = "cursor-pointer flex items-center block";
-        
         const isChecked = index === 0 ? 'checked' : '';
-
         label.innerHTML = `
             <input type="checkbox" class="hidden group-checkbox" value="${group.id}" ${isChecked}>
             <div class="w-full p-3 border-2 border-gray-200 rounded-xl font-medium text-gray-700 transition-colors hover:bg-gray-50 flex justify-between items-center">
@@ -93,7 +157,18 @@ function initMenu() {
     });
 }
 
-// --- LOGIC: MODES & CHART ---
+// --- DYNAMIC LOGIC ---
+// Vracia objekty podľa toho, aký režim a abeceda je zvolená
+function getKeys() {
+    if (currentAlphabet === 'vocab') {
+        if (currentMode === 'h-r') return { q: 'h', a: 's', input: 'button' }; // Jap -> Slov (buttons)
+        else return { q: 's', a: 'r', input: 'text' }; // Slov -> Romaji (text)
+    } else {
+        if (currentMode === 'h-r') return { q: 'h', a: 'r', input: 'text' }; // Znak -> Romaji (text)
+        else return { q: 'r', a: 'h', input: 'button' }; // Romaji -> Znak (buttons)
+    }
+}
+
 function setMode(mode) {
     currentMode = mode;
     document.getElementById('mode-h-r').className = mode === 'h-r' ? 'px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white' : 'px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700';
@@ -104,6 +179,7 @@ function setMode(mode) {
     }
 }
 
+// Ostatné funkcie zobrazenia menu (toggleChart, showMenu, showSummary, startRound, shuffleArray)
 function toggleChart() {
     isChartOpen = !isChartOpen;
     const card = document.getElementById('main-card');
@@ -113,47 +189,27 @@ function toggleChart() {
     const summarySec = document.getElementById('summary-section');
     const modeSelector = document.getElementById('mode-selector');
     const btnChart = document.getElementById('btn-chart');
-    const langSwitch = document.getElementById('lang-switch');
 
     if (isChartOpen) {
-        card.classList.remove('max-w-md');
-        card.classList.add('max-w-3xl');
-        btnChart.innerText = '✕ Close Chart';
-        btnChart.className = 'text-sm font-bold bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors';
-        console.log(langSwitch)
-        langSwitch.style.display = 'none'
-        
-        menuSec.classList.add('hidden');
-        quizSec.classList.add('hidden');
-        summarySec.classList.add('hidden');
-        modeSelector.classList.add('hidden');
-        chartSec.classList.remove('hidden');
+        card.classList.remove('max-w-md'); card.classList.add('max-w-3xl');
+        btnChart.innerText = '✕ Zavrieť'; btnChart.className = 'text-sm font-bold bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors';
+        menuSec.classList.add('hidden'); quizSec.classList.add('hidden'); summarySec.classList.add('hidden');
+        modeSelector.classList.add('hidden'); chartSec.classList.remove('hidden');
     } else {
-        card.classList.add('max-w-md');
-        card.classList.remove('max-w-3xl');
-        btnChart.innerText = '📖 Cheat Sheet';
-        btnChart.className = 'text-sm font-bold bg-purple-100 text-purple-700 px-4 py-2 rounded-lg hover:bg-purple-200 transition-colors';
-        langSwitch.style.display = 'flex'
+        card.classList.add('max-w-md'); card.classList.remove('max-w-3xl');
+        btnChart.innerText = '📖 Cheat Sheet'; btnChart.className = 'text-sm font-bold bg-purple-100 text-purple-700 px-4 py-2 rounded-lg hover:bg-purple-200 transition-colors';
+        chartSec.classList.add('hidden'); modeSelector.classList.remove('hidden');
         
-        chartSec.classList.add('hidden');
-        modeSelector.classList.remove('hidden');
-        
-        if (activeData.length === 0) {
-            menuSec.classList.remove('hidden');
-        } else if (remainingQuestions.length > 0 || currentQuestion !== null) {
+        if (activeData.length === 0) menuSec.classList.remove('hidden');
+        else if (remainingQuestions.length > 0 || currentQuestion !== null) {
             quizSec.classList.remove('hidden');
-            if (currentMode === 'h-r' && !isWaiting) {
-                setTimeout(() => inputEl.focus(), 50);
-            }
-        } else {
-            summarySec.classList.remove('hidden');
-        }
+            if (getKeys().input === 'text' && !isWaiting) setTimeout(() => inputEl.focus(), 50);
+        } else summarySec.classList.remove('hidden');
     }
 }
 
 function showMenu() {
-    activeData = [];
-    currentQuestion = null;
+    activeData = []; currentQuestion = null;
     document.getElementById('quiz-section').classList.add('hidden');
     document.getElementById('summary-section').classList.add('hidden');
     document.getElementById('menu-section').classList.remove('hidden');
@@ -161,68 +217,44 @@ function showMenu() {
 
 function showSummary() {
     currentQuestion = null;
-    document.getElementById('quiz-section').classList.add('hidden');
-    document.getElementById('menu-section').classList.add('hidden');
-    const summarySec = document.getElementById('summary-section');
-    summarySec.classList.remove('hidden');
-
-    document.getElementById('final-score').innerText = roundScore;
-    document.getElementById('final-total').innerText = roundTotal;
-
+    document.getElementById('quiz-section').classList.add('hidden'); document.getElementById('menu-section').classList.add('hidden');
+    document.getElementById('summary-section').classList.remove('hidden');
+    document.getElementById('final-score').innerText = roundScore; document.getElementById('final-total').innerText = roundTotal;
+    
     const mistakesContainer = document.getElementById('mistakes-container');
     const perfectScore = document.getElementById('perfect-score');
     const mistakesList = document.getElementById('mistakes-list');
     mistakesList.innerHTML = '';
 
     if (mistakes.length === 0) {
-        mistakesContainer.classList.add('hidden');
-        perfectScore.classList.remove('hidden');
+        mistakesContainer.classList.add('hidden'); perfectScore.classList.remove('hidden');
     } else {
-        perfectScore.classList.add('hidden');
-        mistakesContainer.classList.remove('hidden');
-        
+        perfectScore.classList.add('hidden'); mistakesContainer.classList.remove('hidden');
         mistakes.forEach(m => {
             const li = document.createElement('li');
-            li.innerHTML = `Character <b>${m.h}</b> (${m.r}) – your answer: <span class="text-red-500 font-semibold">${m.userAnswer}</span>`;
+            li.innerHTML = `Zadanie <b>${m.q}</b> (správne: ${m.expected}) – tvoja odpoveď: <span class="text-red-500 font-semibold">${m.userAnswer}</span>`;
             mistakesList.appendChild(li);
         });
     }
 }
 
-// --- LOGIC: QUIZ ---
 function startRound() {
-    activeData = [];
-    selectedGroups = [];
+    activeData = []; selectedGroups = [];
     const checkboxes = document.querySelectorAll('.group-checkbox:checked');
-    
-    if (checkboxes.length === 0) {
-        alert('Please select at least one row to practice.');
-        return;
-    }
+    if (checkboxes.length === 0) { alert('Prosím, vyber si aspoň jeden okruh na cvičenie.'); return; }
 
-    const groupsToUse = currentAlphabet === 'hiragana' ? hiraganaGroups : katakanaGroups;
+    let groupsToUse = currentAlphabet === 'hiragana' ? hiraganaGroups : (currentAlphabet === 'katakana' ? katakanaGroups : vocabGroups);
 
     checkboxes.forEach(cb => {
         const group = groupsToUse.find(g => g.id === cb.value);
-        if (group) {
-            selectedGroups.push(group);
-            activeData = activeData.concat(group.chars);
-        }
+        if (group) { selectedGroups.push(group); activeData = activeData.concat(group.chars); }
     });
 
-    roundScore = 0;
-    roundTotal = activeData.length;
-    mistakes = [];
-    remainingQuestions = [...activeData];
-    shuffleArray(remainingQuestions);
+    roundScore = 0; roundTotal = activeData.length; mistakes = [];
+    remainingQuestions = [...activeData]; shuffleArray(remainingQuestions);
 
-    document.getElementById('score').innerText = '0';
-    document.getElementById('total').innerText = roundTotal;
-    document.getElementById('feedback').innerText = '';
-
-    document.getElementById('menu-section').classList.add('hidden');
-    document.getElementById('quiz-section').classList.remove('hidden');
-    
+    document.getElementById('score').innerText = '0'; document.getElementById('total').innerText = roundTotal; document.getElementById('feedback').innerText = '';
+    document.getElementById('menu-section').classList.add('hidden'); document.getElementById('quiz-section').classList.remove('hidden');
     nextQuestion();
 }
 
@@ -235,60 +267,64 @@ function shuffleArray(array) {
 
 function nextQuestion() {
     isWaiting = false;
-    
-    if (remainingQuestions.length === 0) {
-        showSummary();
-        return;
-    }
+    if (remainingQuestions.length === 0) { showSummary(); return; }
     
     currentQuestion = remainingQuestions.pop();
-    
+    const keys = getKeys();
     const display = document.getElementById('question-display');
-    display.innerText = currentQuestion.h;
-    display.style.fontSize = currentMode === 'h-r' ? '5rem' : '4rem';
+    
+    display.innerText = currentQuestion[keys.q];
+    
+    if (currentAlphabet === 'vocab') display.style.fontSize = '3rem';
+    else display.style.fontSize = currentMode === 'h-r' ? '5rem' : '4rem';
 
     updateUI();
     document.getElementById('feedback').innerText = '';
 }
 
 function updateUI() {
+    const keys = getKeys();
     const inputContainer = document.getElementById('input-container');
     const optionsContainer = document.getElementById('options-container');
 
-    if (currentMode === 'h-r') {
+    if (keys.input === 'text') {
         optionsContainer.classList.add('hidden');
         inputContainer.classList.remove('hidden');
         inputEl.value = '';
         inputEl.disabled = false;
+        inputEl.placeholder = (keys.a === 'r') ? "Napíš romaji a stlač Enter" : "Napíš odpoveď a stlač Enter";
         setTimeout(() => inputEl.focus(), 50); 
     } else {
         inputContainer.classList.add('hidden');
         optionsContainer.classList.remove('hidden');
         optionsContainer.innerHTML = '';
 
-        let options = []; 
-
-        if (selectedGroups.length <= 2) {
-            options = [...activeData];
-        } else {
-            const currentGroup = selectedGroups.find(g => g.chars.some(c => c.h === currentQuestion.h));
-            options = [...currentGroup.chars];
-
-            let availableForRandom = activeData.filter(c => !options.some(opt => opt.h === c.h));
-            shuffleArray(availableForRandom);
-
-            while (options.length < 10 && availableForRandom.length > 0) {
-                options.push(availableForRandom.pop());
-            }
+        // --- NOVÁ LOGIKA PRE MAXIMÁLNE 5 MOŽNOSTÍ ---
+        let options = [currentQuestion]; // Vždy pridáme správnu odpoveď
+        
+        // Vyfiltrujeme všetky ostatné dostupné slovíčka (aby sme nepridali duplikát správnej odpovede)
+        let availableForRandom = activeData.filter(c => c[keys.a] !== currentQuestion[keys.a]);
+        
+        // Zamiešame dostupné nesprávne možnosti
+        shuffleArray(availableForRandom);
+        
+        // Doplníme maximálne 4 nesprávne možnosti (spolu ich bude max 5)
+        while (options.length < 5 && availableForRandom.length > 0) {
+            options.push(availableForRandom.pop());
         }
 
-        options.sort(() => Math.random() - 0.5);
+        // Nakoniec zamiešame týchto 5 možností, aby správna nebola vždy na rovnakom mieste
+        shuffleArray(options);
 
         options.forEach(opt => {
             const btn = document.createElement('button');
-            btn.className = "w-14 h-14 bg-gray-50 border-2 border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all font-bold text-2xl flex items-center justify-center";
-            btn.innerText = opt.h;
-            btn.onclick = () => { if(!isWaiting) checkButtonInput(opt); };
+            if (currentAlphabet === 'vocab' || keys.a === 's') {
+                btn.className = "px-4 py-2 m-1 bg-gray-50 border-2 border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all font-bold text-lg flex items-center justify-center";
+            } else {
+                btn.className = "w-14 h-14 bg-gray-50 border-2 border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all font-bold text-2xl flex items-center justify-center";
+            }
+            btn.innerText = opt[keys.a];
+            btn.onclick = () => { if(!isWaiting) checkButtonInput(opt, keys); };
             optionsContainer.appendChild(btn);
         });
     }
@@ -297,31 +333,31 @@ function updateUI() {
 function checkTextInput() {
     const userAnswer = inputEl.value.trim().toLowerCase();
     if (userAnswer === '') return; 
-    
     inputEl.disabled = true; 
-    processAnswer(userAnswer === currentQuestion.r, currentQuestion.r, userAnswer);
+    const keys = getKeys();
+    const correctAns = currentQuestion[keys.a].toLowerCase();
+    processAnswer(userAnswer === correctAns, currentQuestion[keys.a], userAnswer, keys);
 }
 
-function checkButtonInput(selectedOption) {
-    processAnswer(selectedOption.h === currentQuestion.h, currentQuestion.h, selectedOption.h);
+function checkButtonInput(selectedOption, keys) {
+    processAnswer(selectedOption[keys.a] === currentQuestion[keys.a], currentQuestion[keys.a], selectedOption[keys.a], keys);
 }
 
-function processAnswer(isCorrect, correctAnswer, userAnswer) {
+function processAnswer(isCorrect, correctAnswer, userAnswer, keys) {
     isWaiting = true;
     const feedback = document.getElementById('feedback');
     
     if (isCorrect) {
         roundScore++;
-        feedback.innerText = 'Correct! ✨';
+        feedback.innerText = 'Správne! ✨';
         feedback.className = 'mt-4 h-6 font-bold text-green-500';
     } else {
         mistakes.push({
-            h: currentQuestion.h,
-            r: currentQuestion.r,
+            q: currentQuestion[keys.q],
+            expected: correctAnswer,
             userAnswer: userAnswer
         });
-
-        feedback.innerText = `Incorrect. Correct answer: ${correctAnswer}`;
+        feedback.innerText = `Chyba. Správna odpoveď: ${correctAnswer}`;
         feedback.className = 'mt-4 h-6 font-bold text-red-500';
     }
 
@@ -329,7 +365,7 @@ function processAnswer(isCorrect, correctAnswer, userAnswer) {
     setTimeout(nextQuestion, 1200);
 }
 
-// --- CHEAT SHEET GENERATOR (Slovak content preserved) ---
+// --- CHEAT SHEET GENERATOR ---
 function generateCheatSheets() {
     const hContent = document.getElementById('chart-hiragana-content');
     const kContent = document.getElementById('chart-katakana-content');
