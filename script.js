@@ -62,6 +62,45 @@ const vocabGroups = [
         {h:'チョコレート', r:'chokoreeto', s:'čokoláda'}, {h:'コーヒー', r:'koohii', s:'káva'},
         {h:'えいご', r:'eigo', s:'angličtina'}, {h:'にほんご', r:'nihongo', s:'japončina'},
         {h:'なん', r:'nan', s:'čo'}
+    ]},
+    // --- SLOVÍČKA PRE LEKCIU 3 ---
+    { id: 'v-l3-1', label: 'L3 - Miesta a smery', chars: [
+        {h:'ここ', r:'koko', s:'tu (toto miesto)'}, {h:'そこ', r:'soko', s:'tam (pri tebe)'},
+        {h:'あそこ', r:'asoko', s:'tam (ďaleko)'}, {h:'どこ', r:'doko', s:'kde'},
+        {h:'こちら', r:'kochira', s:'tadiaľto / tu (zdvorilé)'}, {h:'そちら', r:'sochira', s:'tamtadiaľ / tam (zdvorilé)'},
+        {h:'あちら', r:'achira', s:'tamtadiaľ (ďaleko, zdvorilé)'}, {h:'どちら', r:'dochira', s:'kade / kde (zdvorilé)'}
+    ]},
+    { id: 'v-l3-2', label: 'L3 - Miestnosti v budove', chars: [
+        {h:'きょうしつ', r:'kyoushitsu', s:'trieda'}, {h:'しょくどう', r:'shokudou', s:'jedáleň'},
+        {h:'じむしょ', r:'jimusho', s:'kancelária'}, {h:'かいぎしつ', r:'kaigishitsu', s:'zasadačka'},
+        {h:'うけつけ', r:'uketsuke', s:'recepcia'}, {h:'ロビー', r:'robii', s:'loby, hala'},
+        {h:'へや', r:'heya', s:'izba'}, {h:'トイレ', r:'toire', s:'záchod'}
+    ]},
+    { id: 'v-l3-3', label: 'L3 - Vybavenie a iné', chars: [
+        {h:'かいだん', r:'kaidan', s:'schody'}, {h:'エレベーター', r:'erebeetaa', s:'výťah'},
+        {h:'エスカレーター', r:'esukareetaa', s:'eskalátor'}, {h:'じどうはんばいき', r:'jidouhanbaiki', s:'predajný automat'},
+        {h:'でんわ', r:'denwa', s:'telefón'}, {h:'おくに', r:'okuni', s:'krajina (vaša)'},
+        {h:'かいしゃ', r:'kaisha', s:'firma'}, {h:'うち', r:'uchi', s:'dom, domov'}
+    ]},
+    { id: 'v-l3-4', label: 'L3 - Obchod a tovar', chars: [
+        {h:'くつ', r:'kutsu', s:'topánky'}, {h:'ネクタイ', r:'nekutai', s:'kravata'},
+        {h:'ワイン', r:'wain', s:'víno'}, {h:'うりば', r:'uriba', s:'oddelenie (v obchode)'},
+        {h:'ちか', r:'chika', s:'suterén, podzemie'}, {h:'かい / がい', r:'kai / gai', s:'-té poschodie'},
+        {h:'なんがい', r:'nangai', s:'aké poschodie'}, {h:'えん', r:'en', s:'jen (mena)'},
+        {h:'いくら', r:'ikura', s:'koľko (cena)'}
+    ]},
+    { id: 'v-l3-5', label: 'L3 - Čísla a frázy', chars: [
+        {h:'ひゃく', r:'hyaku', s:'sto'}, {h:'せん', r:'sen', s:'tisíc'},
+        {h:'まん', r:'man', s:'desaťtisíc'}, {h:'すみません', r:'sumimasen', s:'prepáčte'},
+        {h:'どうも', r:'doumo', s:'vďaka'}, {h:'いらっしゃいませ', r:'irasshaimase', s:'vitajte (v obchode)'},
+        {h:'みせてください', r:'misete kudasai', s:'ukážte mi prosím'}, {h:'じゃ', r:'ja', s:'no, tak teda'},
+        {h:'ください', r:'kudasai', s:'dajte mi prosím'}
+    ]},
+    { id: 'v-l3-6', label: 'L3 - Štáty a miesta', chars: [
+        {h:'イタリア', r:'itaria', s:'Taliansko'}, {h:'スイス', r:'suisu', s:'Švajčiarsko'},
+        {h:'フランス', r:'furansu', s:'Francúzsko'}, {h:'ジャカルタ', r:'jakaruta', s:'Jakarta'},
+        {h:'バンコク', r:'bankoku', s:'Bangkok'}, {h:'ベルリン', r:'berurin', s:'Berlín'},
+        {h:'しんおおさか', r:'shin-oosaka', s:'Šin-Ósaka (stanica)'}
     ]}
 ];
 
@@ -109,6 +148,7 @@ function setAlphabet(alpha) {
         document.getElementById('main-title').innerText = "Hiragana Trainer";
         document.getElementById('chart-hiragana-content').classList.remove('hidden');
         document.getElementById('chart-katakana-content').classList.add('hidden');
+        document.getElementById('chart-vocab-content').classList.add('hidden');
         document.getElementById('btn-chart').classList.remove('hidden');
         mode1Btn.innerText = "Znak → Romaji";
         mode2Btn.innerText = "Romaji → Znak";
@@ -117,15 +157,17 @@ function setAlphabet(alpha) {
         document.getElementById('main-title').innerText = "Katakana Trainer";
         document.getElementById('chart-katakana-content').classList.remove('hidden');
         document.getElementById('chart-hiragana-content').classList.add('hidden');
+        document.getElementById('chart-vocab-content').classList.add('hidden');
         document.getElementById('btn-chart').classList.remove('hidden');
         mode1Btn.innerText = "Znak → Romaji";
         mode2Btn.innerText = "Romaji → Znak";
     } else if (alpha === 'vocab') {
         btnVocab.className = activeClass;
-        document.getElementById('main-title').innerText = "Slovíčka L1-2";
+        document.getElementById('main-title').innerText = "Slovíčka L1-3";
         document.getElementById('chart-katakana-content').classList.add('hidden');
         document.getElementById('chart-hiragana-content').classList.add('hidden');
-        document.getElementById('btn-chart').classList.add('hidden'); 
+        document.getElementById('chart-vocab-content').classList.remove('hidden');         
+        document.getElementById('btn-chart').classList.remove('hidden');      
         mode1Btn.innerText = "Jap → Slov";
         mode2Btn.innerText = "Slov → Romaji";
     }
@@ -158,14 +200,13 @@ function initMenu() {
 }
 
 // --- DYNAMIC LOGIC ---
-// Vracia objekty podľa toho, aký režim a abeceda je zvolená
 function getKeys() {
     if (currentAlphabet === 'vocab') {
-        if (currentMode === 'h-r') return { q: 'h', a: 's', input: 'button' }; // Jap -> Slov (buttons)
-        else return { q: 's', a: 'r', input: 'text' }; // Slov -> Romaji (text)
+        if (currentMode === 'h-r') return { q: 'h', a: 's', input: 'button' }; 
+        else return { q: 's', a: 'r', input: 'text' }; 
     } else {
-        if (currentMode === 'h-r') return { q: 'h', a: 'r', input: 'text' }; // Znak -> Romaji (text)
-        else return { q: 'r', a: 'h', input: 'button' }; // Romaji -> Znak (buttons)
+        if (currentMode === 'h-r') return { q: 'h', a: 'r', input: 'text' }; 
+        else return { q: 'r', a: 'h', input: 'button' }; 
     }
 }
 
@@ -179,7 +220,6 @@ function setMode(mode) {
     }
 }
 
-// Ostatné funkcie zobrazenia menu (toggleChart, showMenu, showSummary, startRound, shuffleArray)
 function toggleChart() {
     isChartOpen = !isChartOpen;
     const card = document.getElementById('main-card');
@@ -195,6 +235,15 @@ function toggleChart() {
         btnChart.innerText = '✕ Zavrieť'; btnChart.className = 'text-sm font-bold bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors';
         menuSec.classList.add('hidden'); quizSec.classList.add('hidden'); summarySec.classList.add('hidden');
         modeSelector.classList.add('hidden'); chartSec.classList.remove('hidden');
+        
+        if (currentAlphabet === 'hiragana') {
+            document.getElementById('chart-hiragana-content').classList.remove('hidden');
+        } else if (currentAlphabet === 'katakana') {
+            document.getElementById('chart-katakana-content').classList.remove('hidden');
+        } else if (currentAlphabet === 'vocab') {
+            document.getElementById('chart-vocab-content').classList.remove('hidden');
+        }
+
     } else {
         card.classList.add('max-w-md'); card.classList.remove('max-w-3xl');
         btnChart.innerText = '📖 Cheat Sheet'; btnChart.className = 'text-sm font-bold bg-purple-100 text-purple-700 px-4 py-2 rounded-lg hover:bg-purple-200 transition-colors';
@@ -299,21 +348,16 @@ function updateUI() {
         optionsContainer.classList.remove('hidden');
         optionsContainer.innerHTML = '';
 
-        // --- NOVÁ LOGIKA PRE MAXIMÁLNE 5 MOŽNOSTÍ ---
-        let options = [currentQuestion]; // Vždy pridáme správnu odpoveď
+        let options = [currentQuestion]; 
         
-        // Vyfiltrujeme všetky ostatné dostupné slovíčka (aby sme nepridali duplikát správnej odpovede)
         let availableForRandom = activeData.filter(c => c[keys.a] !== currentQuestion[keys.a]);
         
-        // Zamiešame dostupné nesprávne možnosti
         shuffleArray(availableForRandom);
         
-        // Doplníme maximálne 4 nesprávne možnosti (spolu ich bude max 5)
         while (options.length < 5 && availableForRandom.length > 0) {
             options.push(availableForRandom.pop());
         }
 
-        // Nakoniec zamiešame týchto 5 možností, aby správna nebola vždy na rovnakom mieste
         shuffleArray(options);
 
         options.forEach(opt => {
@@ -543,6 +587,58 @@ function generateCheatSheets() {
             <div class="bg-purple-100 p-2 rounded"><span class="block text-2xl font-bold chart-char">ピャ</span>pya</div><div class="bg-purple-100 p-2 rounded"><span class="block text-2xl font-bold chart-char">ピュ</span>pyu</div><div class="bg-purple-100 p-2 rounded"><span class="block text-2xl font-bold chart-char">ピョ</span>pyo</div>
         </div>
     `;
+
+    const vContent = document.getElementById('chart-vocab-content');
+    if (vContent) {
+        let vHtml = '';
+        
+        const l1Groups = vocabGroups.filter(g => g.id.startsWith('v-l1'));
+        vHtml += '<h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2 mt-4">Lekcia 1 (Zámená, ľudia, miesta)</h2>';
+        vHtml += '<div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8 text-center text-sm">';
+        l1Groups.forEach(group => {
+            group.chars.forEach(item => {
+                vHtml += `
+                <div class="bg-gray-50 p-2 rounded shadow-sm border border-gray-100 flex flex-col justify-center transition-all hover:border-blue-300">
+                    <span class="block text-xl font-bold chart-char text-blue-600 mb-1">${item.h}</span>
+                    <span class="block font-bold text-gray-700">${item.r}</span>
+                    <span class="block text-xs text-gray-500 mt-1">${item.s}</span>
+                </div>`;
+            });
+        });
+        vHtml += '</div>';
+
+        const l2Groups = vocabGroups.filter(g => g.id.startsWith('v-l2'));
+        vHtml += '<h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Lekcia 2 (Ukazovacie zámená a predmety)</h2>';
+        vHtml += '<div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8 text-center text-sm">';
+        l2Groups.forEach(group => {
+            group.chars.forEach(item => {
+                vHtml += `
+                <div class="bg-gray-50 p-2 rounded shadow-sm border border-gray-100 flex flex-col justify-center transition-all hover:border-blue-300">
+                    <span class="block text-xl font-bold chart-char text-blue-600 mb-1">${item.h}</span>
+                    <span class="block font-bold text-gray-700">${item.r}</span>
+                    <span class="block text-xs text-gray-500 mt-1">${item.s}</span>
+                </div>`;
+            });
+        });
+        vHtml += '</div>';
+
+        const l3Groups = vocabGroups.filter(g => g.id.startsWith('v-l3'));
+        vHtml += '<h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2 mt-6">Lekcia 3 (Miesta, smery a nákupy)</h2>';
+        vHtml += '<div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8 text-center text-sm">';
+        l3Groups.forEach(group => {
+            group.chars.forEach(item => {
+                vHtml += `
+                <div class="bg-gray-50 p-2 rounded shadow-sm border border-gray-100 flex flex-col justify-center transition-all hover:border-blue-300">
+                    <span class="block text-xl font-bold chart-char text-blue-600 mb-1">${item.h}</span>
+                    <span class="block font-bold text-gray-700">${item.r}</span>
+                    <span class="block text-xs text-gray-500 mt-1">${item.s}</span>
+                </div>`;
+            });
+        });
+        vHtml += '</div>';
+        
+        vContent.innerHTML = vHtml;
+    }
 }
 
 generateCheatSheets();
