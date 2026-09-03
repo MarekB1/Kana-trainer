@@ -29,17 +29,39 @@ const vocabGroups = [
     { id: 'v-l1-1', label: 'L1 - Zámená a ľudia', chars: [
         {h:'わたし', r:'watashi', s:'ja'}, {h:'わたしたち', r:'watashitachi', s:'my'},
         {h:'あなた', r:'anata', s:'ty'}, {h:'あのひと', r:'anohito', s:'ten človek'},
-        {h:'みなさん', r:'minasan', s:'všetci / dámy a páni'}
+        {h:'あのかた', r:'anokata', s:'ten človek (zdvorilo)'},
+        {h:'みなさん', r:'minasan', s:'všetci / dámy a páni'},
+        {h:'さん', r:'san', s:'pán / pani (prípona)'},
+        {h:'ちゃん', r:'chan', s:'prípona (pre deti)'},
+        {h:'じん', r:'jin', s:'občan / národnosť (prípona)'}
     ]},
     { id: 'v-l1-2', label: 'L1 - Povolania', chars: [
         {h:'せんせい', r:'sensei', s:'učiteľ (nie o sebe)'}, {h:'きょうし', r:'kyoushi', s:'učiteľ (o sebe)'},
         {h:'がくせい', r:'gakusei', s:'študent'}, {h:'かいしゃいん', r:'kaishain', s:'zamestnanec firmy'},
+        {h:'しゃいん', r:'shain', s:'zamestnanec (konkrétnej firmy)'},
         {h:'ぎんこういん', r:'ginkouin', s:'bankový úradník'}, {h:'いしゃ', r:'isha', s:'lekár'},
         {h:'けんきゅうしゃ', r:'kenkyuusha', s:'výskumník'}, {h:'エンジニア', r:'enjinia', s:'inžinier'}
     ]},
-    { id: 'v-l1-3', label: 'L1 - Miesta a otázky', chars: [
+    { id: 'v-l1-3', label: 'L1 - Miesta, vek a ostatné', chars: [
         {h:'だいがく', r:'daigaku', s:'univerzita'}, {h:'びょういん', r:'byouin', s:'nemocnica'},
-        {h:'でんき', r:'denki', s:'elektrina / svetlo'}, {h:'だれ', r:'dare', s:'kto'}
+        {h:'でんき', r:'denki', s:'elektrina / svetlo'}, {h:'だれ', r:'dare', s:'kto'},
+        {h:'どなた', r:'donata', s:'kto (zdvorilo)'}, {h:'さい', r:'sai', s:'rokov (vek)'},
+        {h:'なんさい', r:'nansai', s:'koľko rokov'}, {h:'おいくつ', r:'oikutsu', s:'koľko rokov (zdvorilo)'},
+        {h:'はい', r:'hai', s:'áno'}, {h:'いいえ', r:'iie', s:'nie'}
+    ]},
+    { id: 'v-l1-4', label: 'L1 - Frázy (Zoznamovanie)', chars: [
+        {h:'はじめまして', r:'hajimemashite', s:'teší ma (prvé stretnutie)'},
+        {h:'からきました', r:'kara kimashita', s:'pochádzam z...'},
+        {h:'よろしくおねがいします', r:'yoroshiku onegaishimasu', s:'teší ma (na konci)'},
+        {h:'しつれいですが', r:'shitsurei desu ga', s:'prepáčte, ale...'},
+        {h:'おなまえは', r:'onamae wa', s:'ako sa voláte?'}
+    ]},
+    { id: 'v-l1-5', label: 'L1 - Krajiny', chars: [
+        {h:'アメリカ', r:'amerika', s:'USA'}, {h:'イギリス', r:'igirisu', s:'Veľká Británia'},
+        {h:'インド', r:'indo', s:'India'}, {h:'インドネシア', r:'indoneshia', s:'Indonézia'},
+        {h:'かんこく', r:'kankoku', s:'Južná Kórea'}, {h:'タイ', r:'tai', s:'Thajsko'},
+        {h:'ちゅうごく', r:'chuugoku', s:'Čína'}, {h:'ドイツ', r:'doitsu', s:'Nemecko'},
+        {h:'にほん', r:'nihon', s:'Japonsko'}, {h:'ブラジル', r:'burajiru', s:'Brazília'}
     ]},
     { id: 'v-l2-1', label: 'L2 - Ukazovacie zámená', chars: [
         {h:'これ', r:'kore', s:'toto (tu)'}, {h:'それ', r:'sore', s:'tamto (pri tebe)'},
@@ -51,6 +73,31 @@ const vocabGroups = [
         {h:'ざっし', r:'zasshi', s:'časopis'}, {h:'しんぶん', r:'shinbun', s:'noviny'},
         {h:'ノート', r:'nooto', s:'zošit'}, {h:'てちょう', r:'techou', s:'vreckový diár'},
         {h:'めいし', r:'meishi', s:'vizitka'}, {h:'カード', r:'kaado', s:'karta'}
+    ]},
+    { id: 'v-l2-3', label: 'L2 - Predmety a technika', chars: [
+        {h:'えんぴつ', r:'enpitsu', s:'ceruzka'}, {h:'ボールペン', r:'boorupen', s:'pero'},
+        {h:'シャープペンシル', r:'shaapupenshiru', s:'mikroceruzka'}, {h:'かぎ', r:'kagi', s:'kľúč'},
+        {h:'とけい', r:'tokei', s:'hodinky / hodiny'}, {h:'かさ', r:'kasa', s:'dáždnik'},
+        {h:'かばん', r:'kaban', s:'taška / kufrík'}, {h:'シーディー', r:'shiidii', s:'CD'},
+        {h:'テレビ', r:'terebi', s:'televízor'}, {h:'ラジオ', r:'rajio', s:'rádio'},
+        {h:'カメラ', r:'kamera', s:'fotoaparát'}, {h:'コンピューター', r:'konpyuutaa', s:'počítač'},
+        {h:'くるま', r:'kuruma', s:'auto'}, {h:'つくえ', r:'tsukue', s:'stôl'},
+        {h:'いす', r:'isu', s:'stolička'}
+    ]},
+    { id: 'v-l2-4', label: 'L2 - Ostatné', chars: [
+        {h:'チョコレート', r:'chokoreeto', s:'čokoláda'}, {h:'コーヒー', r:'koohii', s:'káva'},
+        {h:'おみやげ', r:'omiyage', s:'suvenír / darček'}, {h:'えいご', r:'eigo', s:'angličtina'},
+        {h:'にほんご', r:'nihongo', s:'japončina'}, {h:'ご', r:'go', s:'jazyk (prípona)'},
+        {h:'なん', r:'nan', s:'čo'}, {h:'そう', r:'sou', s:'tak / áno'}
+    ]},
+    { id: 'v-l2-5', label: 'L2 - Frázy a reakcie', chars: [
+        {h:'あのう', r:'anou', s:'ehm (váhanie)'}, {h:'えっ', r:'e', s:'čože?! (prekvapenie)'},
+        {h:'どうぞ', r:'douzo', s:'nech sa páči (pri podávaní)'},
+        {h:'どうもありがとうございます', r:'doumo arigatou gozaimasu', s:'veľmi pekne ďakujem'},
+        {h:'そうですか', r:'sou desu ka', s:'aha / chápem'}, {h:'ちがいます', r:'chigaimasu', s:'nie je to tak / omyl'},
+        {h:'あ', r:'a', s:'ah!'},
+        {h:'これからおせわになります', r:'korekara osewa ni narimasu', s:'teším sa na spoluprácu'},
+        {h:'こちらこそよろしく', r:'kochirakoso yoroshiku', s:'nápodobne (teší ma)'}
     ]},
     { id: 'v-l2-3', label: 'L2 - Predmety a nábytok', chars: [
         {h:'えんぴつ', r:'enpitsu', s:'ceruzka'}, {h:'ボールペン', r:'boorupen', s:'pero'},
