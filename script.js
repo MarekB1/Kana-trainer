@@ -26,13 +26,12 @@ function setAlphabet(alpha) {
     const btnHiragana = document.getElementById('alpha-hiragana');
     const btnKatakana = document.getElementById('alpha-katakana');
     const btnVocab = document.getElementById('alpha-vocab');
-    
     const mode1Btn = document.getElementById('mode-h-r');
     const mode2Btn = document.getElementById('mode-r-h');
     
-    // Nové triedy pre bočné menu
-    const inactiveClass = "px-4 py-3 rounded-xl text-left font-bold text-gray-500 hover:bg-gray-50 transition-all border border-transparent";
-    const activeClass = "px-4 py-3 rounded-xl text-left font-bold bg-blue-50 text-blue-700 shadow-sm transition-all border border-blue-200";
+    // Nové responzívne triedy - pridali sme flex-1, text-center md:text-left a whitespace-nowrap
+    const inactiveClass = "px-4 py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-50 transition-all border border-transparent flex-1 text-center md:text-left whitespace-nowrap text-sm md:text-base";
+    const activeClass = "px-4 py-3 rounded-xl font-bold bg-blue-50 text-blue-700 shadow-sm transition-all border border-blue-200 flex-1 text-center md:text-left whitespace-nowrap text-sm md:text-base";
 
     btnHiragana.className = inactiveClass;
     btnKatakana.className = inactiveClass;
@@ -133,8 +132,8 @@ function getKeys() {
 
 function setMode(mode) {
     currentMode = mode;
-    const activeModeClass = "px-4 py-3 rounded-xl font-bold transition-colors bg-blue-600 text-white text-left shadow-sm";
-    const inactiveModeClass = "px-4 py-3 rounded-xl font-bold transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 text-left";
+    const activeModeClass = "px-2 md:px-4 py-2 md:py-3 rounded-xl font-bold transition-colors bg-blue-600 text-white text-center md:text-left shadow-sm flex-1 text-sm md:text-base whitespace-nowrap";
+    const inactiveModeClass = "px-2 md:px-4 py-2 md:py-3 rounded-xl font-bold transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 text-center md:text-left flex-1 text-sm md:text-base whitespace-nowrap";
 
     document.getElementById('mode-h-r').className = mode === 'h-r' ? activeModeClass : inactiveModeClass;
     document.getElementById('mode-r-h').className = mode === 'r-h' ? activeModeClass : inactiveModeClass;
@@ -249,8 +248,17 @@ function nextQuestion() {
     
     display.innerText = currentQuestion[keys.q];
     
-    if (currentAlphabet === 'vocab') display.style.fontSize = '3rem';
-    else display.style.fontSize = currentMode === 'h-r' ? '5rem' : '4rem';
+    display.className = "font-bold text-blue-600 mb-6 md:mb-8 flex items-center justify-center text-center px-4 leading-tight";
+    
+    if (currentAlphabet === 'vocab') {
+        display.classList.add('text-4xl', 'md:text-5xl');
+    } else {
+        if (currentMode === 'h-r') {
+            display.classList.add('text-7xl', 'md:text-[6rem]');
+        } else {
+            display.classList.add('text-5xl', 'md:text-6xl');
+        }
+    }
 
     updateUI();
     document.getElementById('feedback').innerText = '';
